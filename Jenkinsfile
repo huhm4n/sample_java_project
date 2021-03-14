@@ -18,11 +18,19 @@ pipeline {
             steps {
                 sh 'mvn -Dmaven.test.failure.ignore=true install' 
             }
-            post {
-                success {
-                    junit 'target/surefire-reports/**/*.xml' 
-                }
+
+        stage ('Publish') {
+            steps {
+                rtServer (
+                    id: "local_artifact_server",
+                    url: http://34.68.29.93:8081/artifactory,
+                    credentialsId: admin
+					)
+					rtPublishBuildInfo (
+                    serverId: "local_artifact_server"
+                )
             }
         }
     }
+}
 }
