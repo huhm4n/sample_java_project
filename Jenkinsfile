@@ -19,18 +19,22 @@ pipeline {
                 sh 'mvn -Dmaven.test.failure.ignore=true install' 
             }
 
-        stage ('Publish') {
+
+ stage ('Publish artifact') {
             steps {
                 rtServer (
-                    id: "local_artifact_server",
-                    url: http://34.68.29.93:8081/artifactory,
-                    credentialsId: admin
-					)
-					rtPublishBuildInfo (
-                    serverId: "local_artifact_server"
+                    id: "local_artifact",
+                    url: 'http://34.68.29.93:8081/artifactory',
+                    username: 'admin',
+					password: 'Madipti1',
                 )
-            }
-        }
-    }
+
+
+				rtPublishBuildInfo (
+                    serverId: "local_artifact"
+                )
+}
+}
+}
 }
 }
